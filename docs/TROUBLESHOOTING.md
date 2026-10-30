@@ -29,9 +29,26 @@ By design. Publishing requires **both**:
 The **Verify YouTube credentials** step is the tell: if it is skipped, the
 condition was false. If it runs and fails, the credentials are wrong.
 
-> Note: this repo uploads through `scripts/youtube_upload.py`. Upstream's
-> Upload-Post integration does **not** apply — the CLI has no publish code path,
-> so `upload_post_*` keys in `config.toml` do nothing on this route.
+### Correcting a common claim: does the CLI upload?
+
+Measuring this properly, because it is easy to get wrong:
+
+- `cli.py` has **no upload flags** and never mentions `upload_post`. True.
+- But `cli.py` calls `app.services.task.start()`, and `start()` finishes by
+  calling `_schedule_cross_post()`, which submits the upload to a
+  `ThreadPoolExecutor` (2 workers) **and returns immediately**. The CLI prints
+  its summary and the process exits.
+
+So built-in Upload-Post publishing *can* fire from a CLI run, but nothing joins
+that thread and there is no exit hook. In a short-lived CI process it is a race:
+the upload may be killed mid-flight, and the run still reports success. That is
+why this repo uploads with `scripts/youtube_upload.py` (synchronous, waits for
+the video ID) instead of relying on the background thread.
+
+Upstream's built-in path also requires an Upload-Post account (free tier: 10
+uploads/month) and needs `upload_post_enabled` + `upload_post_auto_upload` +
+`upload_post_platforms = ["youtube"]`. The direct API route is free at ~6
+uploads/day and needs no third party.
 
 ---
 

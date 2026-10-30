@@ -43,11 +43,12 @@ concurrency:
 env:
   MPT_HOME: ${{ github.workspace }}/.mpt
   LLM_PROVIDER: ${{ vars.LLM_PROVIDER || 'groq' }}
-  LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+  # Accept both naming schemes: the MPT_* names are what the earlier plan used.
+  LLM_API_KEY: ${{ secrets.LLM_API_KEY || secrets.MPT_LLM_API_KEY }}
   LLM_MODEL: ${{ vars.LLM_MODEL || 'llama-3.3-70b-versatile' }}
-  VIDEO_SOURCE: ${{ vars.VIDEO_SOURCE || 'pexels' }}
-  PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
-  PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+  VIDEO_SOURCE: ${{ vars.VIDEO_SOURCE || 'pixabay' }}
+  PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY || secrets.MPT_PEXELS_KEYS }}
+  PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY || secrets.MPT_PIXABAY_KEYS }}
   VOICE_NAME: ${{ vars.VOICE_NAME || 'en-US-AndrewNeural' }}
   AUTOPUBLISH: ${{ vars.AUTO_PUBLISH || 'false' }}
 

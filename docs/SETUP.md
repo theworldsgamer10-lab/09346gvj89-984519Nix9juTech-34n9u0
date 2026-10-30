@@ -14,7 +14,13 @@ Get the keys:
 | Secret | Where | Notes |
 |---|---|---|
 | `LLM_API_KEY` | [console.groq.com/keys](https://console.groq.com/keys) | Free. This writes the scripts. |
-| `PEXELS_API_KEY` | [pexels.com/api](https://www.pexels.com/api/) | Free, instant. This supplies footage. |
+| `PIXABAY_API_KEY` | [pixabay.com/api/docs](https://pixabay.com/api/docs/) | Free, instant. This supplies footage. |
+
+**Already added secrets with the old names?** Nothing to redo. The workflow
+accepts `MPT_LLM_API_KEY`, `MPT_PIXABAY_KEYS` and `MPT_PEXELS_KEYS` as
+alternatives, and stock keys may be comma-separated. Pixabay is the default
+`VIDEO_SOURCE` because you already hold that key; switch to `pexels` with the
+`VIDEO_SOURCE` variable whenever you like.
 
 Add them: **repo → Settings → Secrets and variables → Actions → New repository
 secret**. Names must match exactly.

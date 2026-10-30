@@ -54,7 +54,14 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def env(name: str, default: str = "") -> str:
+    """Read an env var, tolerating a comma-separated list and extra spaces."""
     return os.environ.get(name, default).strip()
+
+
+def env_keys(name: str) -> list[str]:
+    """Stock providers accept several keys; the old plan stored them comma-separated."""
+    raw = os.environ.get(name, "")
+    return [k.strip().strip('"').strip("'") for k in raw.split(",") if k.strip()]
 
 
 def fail(msg: str) -> None:
@@ -81,9 +88,12 @@ def main() -> int:
         fail(f"unknown VIDEO_SOURCE '{source}'. Choose from: {', '.join(SOURCE_KEYS)}")
 
     source_key = SOURCE_KEYS[source]
-    stock_key = env(f"{source.upper()}_API_KEY")
-    if not stock_key:
-        fail(f"{source.upper()}_API_KEY is empty - the render needs stock footage keys")
+    stock_keys = env_keys(f"{source.upper()}_API_KEY")
+    if not stock_keys:
+        fail(
+            f"{source.upper()}_API_KEY is empty - the render needs stock footage keys. "
+            f"Add repository secret {source.upper()}_API_KEY (or MPT_{source.upper()}_KEYS)."
+        )
 
     doc = tomlkit.parse(template.read_text(encoding="utf-8"))
     app = doc["app"]
@@ -96,7 +106,7 @@ def main() -> int:
 
     # --- footage ------------------------------------------------------------
     app["video_source"] = source
-    app[source_key] = [stock_key]
+    app[source_key] = stock_keys
 
     # --- subtitles ----------------------------------------------------------
     subtitle_provider = env("SUBTITLE_PROVIDER", "edge").lower()
@@ -123,7 +133,7 @@ def main() -> int:
     print(f"  video_source  = {source}")
     print(f"  subtitle      = {subtitle_provider}")
     print(f"  llm key       = set ({len(api_key)} chars)")
-    print(f"  stock key     = set ({len(stock_key)} chars)")
+    print(f"  stock key(s)  = {len(stock_keys)} set ({len(stock_keys[0])} chars each)")
     return 0
 
 
