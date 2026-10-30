@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nix Tech</title>
+<style>
+  :root{--fg:#12141a;--mut:#5b6273;--line:#e3e6ee;--bg:#fbfcfe}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  main{max-width:44rem;margin:0 auto;padding:3.5rem 1.4rem 5rem}
+  h1{font-size:2rem;letter-spacing:-.02em;margin:0 0 .3rem}
+  .sub{color:var(--mut);margin:0 0 2.4rem}
+  h2{font-size:1.05rem;margin:2.4rem 0 .6rem;letter-spacing:-.01em}
+  p,li{color:#232732}
+  ul{padding-left:1.2rem}
+  a{color:#1a56db;text-underline-offset:3px}
+  .links{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.6rem 0 0}
+  .links a{border:1px solid var(--line);background:#fff;border-radius:8px;
+           padding:.55rem .9rem;text-decoration:none;font-size:.93rem;font-weight:500}
+  footer{margin-top:3.5rem;padding-top:1.4rem;border-top:1px solid var(--line);
+         color:var(--mut);font-size:.87rem}
+</style>
+</head>
+<body>
+<main>
+  <h1>Nix Tech</h1>
+  <p class="sub">Short, clear explanations of how things actually work.</p>
+
+  <p>Nix Tech is a personal YouTube channel that publishes one-minute
+  educational Shorts: the mechanism behind an everyday phenomenon, explained in
+  plain language, across physics, biology, history, engineering and the rest of
+  the school curriculum.</p>
+
+  <p>This site exists for one practical reason: Google's OAuth consent screen
+  requires a public home page, privacy policy and terms of service before a
+  personal automation tool can be authorised to upload on the channel owner's
+  behalf.</p>
+
+  <h2>What this application does</h2>
+  <ul>
+    <li>Generates and renders short educational videos from a topic list.</li>
+    <li>Uploads them to the operator's own YouTube channel.</li>
+    <li>Uses only the <code>youtube.upload</code> permission, for the operator's
+        own account.</li>
+    <li>Collects no data about any other person, and has no other users.</li>
+  </ul>
+
+  <div class="links">
+    <a href="privacy.html">Privacy policy</a>
+    <a href="terms.html">Terms of service</a>
+  </div>
+
+  <footer>
+    Operated by the channel owner as a personal, non-commercial tool.<br>
+    Contact: the repository owner via their GitHub profile.
+  </footer>
+</main>
+</body>
+</html>

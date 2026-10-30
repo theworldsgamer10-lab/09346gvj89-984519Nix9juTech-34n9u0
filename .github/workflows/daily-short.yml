@@ -51,6 +51,13 @@ env:
   PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY || secrets.MPT_PIXABAY_KEYS }}
   VOICE_NAME: ${{ vars.VOICE_NAME || 'en-US-AndrewNeural' }}
   AUTOPUBLISH: ${{ vars.AUTO_PUBLISH || 'false' }}
+  # Which publisher to use when publishing is enabled.
+  #   upload_post  (default) - public uploads work immediately, 10/month free
+  #   youtube_api            - free forever, but uploads stay PRIVATE until
+  #                            YouTube audits the Google Cloud project
+  PUBLISH_VIA: ${{ vars.PUBLISH_VIA || 'upload_post' }}
+  UPLOAD_POST_API_KEY: ${{ secrets.UPLOAD_POST_API_KEY }}
+  UPLOAD_POST_USERNAME: ${{ secrets.UPLOAD_POST_USERNAME }}
 
 jobs:
   make:
@@ -161,7 +168,8 @@ jobs:
             --out out/metadata.json
           python scripts/ci.py desc-file out/description.txt
 
-      - name: Verify YouTube credentials
+      # ------------------------------------------------------------------ verify
+      - name: Verify publisher credentials
         if: ${{ steps.out.outcome == 'success' && (inputs.publish || env.AUTOPUBLISH == 'true') }}
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
@@ -169,14 +177,36 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: |
           set -euo pipefail
-          python scripts/youtube_upload.py \
+          if [ "$PUBLISH_VIA" = "youtube_api" ]; then
+            python scripts/youtube_upload.py \
+              --file "${{ steps.out.outputs.video }}" \
+              --title "$(python scripts/ci.py meta title)" \
+              --dry-run
+          else
+            if [ -z "${UPLOAD_POST_API_KEY:-}" ] || [ -z "${UPLOAD_POST_USERNAME:-}" ]; then
+              echo "::error::PUBLISH_VIA=upload_post but UPLOAD_POST_API_KEY / UPLOAD_POST_USERNAME are not set."
+              echo "::error::Either add those two secrets, or set the repo variable PUBLISH_VIA=youtube_api."
+              exit 1
+            fi
+            echo "::notice::Upload-Post configured for user ${UPLOAD_POST_USERNAME}"
+          fi
+
+      # ----------------------------------------------------------------- publish
+      - name: Publish via Upload-Post
+        if: ${{ steps.out.outcome == 'success' && (inputs.publish || env.AUTOPUBLISH == 'true') && env.PUBLISH_VIA == 'upload_post' }}
+        run: |
+          set -euo pipefail
+          python scripts/publish_post.py \
             --file "${{ steps.out.outputs.video }}" \
             --title "$(python scripts/ci.py meta title)" \
-            --dry-run
+            --description-file out/description.txt \
+            --tags "$(python scripts/ci.py meta tags_csv)" \
+            --platforms youtube \
+            --privacy "${{ inputs.privacy || 'unlisted' }}" \
+            --report out/upload.json
 
-      - name: Upload to YouTube
-        id: publish
-        if: ${{ steps.out.outcome == 'success' && (inputs.publish || env.AUTOPUBLISH == 'true') && !inputs.dry_run }}
+      - name: Publish via YouTube Data API
+        if: ${{ steps.out.outcome == 'success' && (inputs.publish || env.AUTOPUBLISH == 'true') && env.PUBLISH_VIA == 'youtube_api' }}
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
