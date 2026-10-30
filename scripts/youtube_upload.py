@@ -194,18 +194,25 @@ def upload(args: argparse.Namespace) -> int:
     # publishing anything.
     if args.dry_run:
         try:
-            ch = service.channels().list(part="snippet,statistics", mine=True).execute()
-            item = (ch.get("items") or [{}])[0]
-            name = item.get("snippet", {}).get("title", "<unknown>")
-            subs = item.get("statistics", {}).get("subscriberCount", "?")
-            print(f"::notice::DRY RUN OK - authenticated as '{name}' ({subs} subs)")
-            print(f"  video : {path.name} ({path.stat().st_size / 1e6:.1f} MB)")
-            print(f"  title : {title}")
-            print(f"  priv  : {args.privacy}")
-            print(f"  tags  : {', '.join(tags) or '(none)'}")
-            return 0
+            ch = service.channels().list(part="snippet,statistics,mine", mine=True).execute()
         except HttpError as exc:
             die(f"YouTube rejected the credentials: {exc}")
+
+        items = ch.get("items") or []
+        if not items:
+            die("The credentials work, but this Google account has no YouTube channel. "
+                "Sign in to youtube.com with the same account and create a channel, "
+                "then re-run --auth so the token is issued for the channel account.")
+        item = items[0]
+        name = item.get("snippet", {}).get("title", "<unknown>")
+        subs = item.get("statistics", {}).get("subscriberCount", "?")
+        vids = item.get("statistics", {}).get("videoCount", "?")
+        print(f"::notice::DRY RUN OK - authenticated as '{name}' ({subs} subs, {vids} videos)")
+        print(f"  video : {path.name} ({path.stat().st_size / 1e6:.1f} MB)")
+        print(f"  title : {title}")
+        print(f"  priv  : {args.privacy}")
+        print(f"  tags  : {', '.join(tags) or '(none)'}")
+        return 0
 
     privacy = args.privacy
     if args.schedule:

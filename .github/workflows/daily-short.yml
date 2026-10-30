@@ -181,9 +181,13 @@ jobs:
         run: |
           set -euo pipefail
           if [ "$PUBLISH_VIA" = "youtube_api" ]; then
+            # Uses the real video when one exists. The dry run only reads the
+            # channel, so an empty file is fine for a credentials check.
+            V="${{ steps.out.outputs.video }}"
+            if [ -z "${V:-}" ] || [ ! -f "$V" ]; then V="out/credentials-check.mp4"; : > "$V"; fi
             python scripts/youtube_upload.py \
-              --file "${{ steps.out.outputs.video }}" \
-              --title "$(python scripts/ci.py meta title)" \
+              --file "$V" \
+              --title "$(python scripts/ci.py meta title 2>/dev/null || echo 'credentials check')" \
               --dry-run
           else
             if [ -z "${UPLOAD_POST_API_KEY:-}" ] || [ -z "${UPLOAD_POST_USERNAME:-}" ]; then
