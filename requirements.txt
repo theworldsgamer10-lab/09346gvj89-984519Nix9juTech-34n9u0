@@ -1,0 +1,10 @@
+# Runtime deps for the pipeline scripts.
+# MoneyPrinterTurbo itself is installed separately as the official `mpt` package.
+tomlkit==0.13.3
+requests==2.32.3
+google-api-python-client==2.149.0
+google-auth==2.37.0
+google-auth-httplib2==0.2.0
+# dev / CI
+pytest==8.3.4
+PyYAML==6.0.2

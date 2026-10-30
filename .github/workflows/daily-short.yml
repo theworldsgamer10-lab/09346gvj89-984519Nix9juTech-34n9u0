@@ -83,7 +83,8 @@ jobs:
           sudo apt-get install -y -qq ffmpeg
           python -m pip install --quiet --upgrade pip
           # mpt is the official MoneyPrinterTurbo package (same upstream author).
-          pip install --quiet "mpt==1.3.9" tomlkit google-api-python-client google-auth
+          pip install --quiet -r requirements.txt
+          pip install --quiet "mpt==1.3.9"
           ffmpeg -version | head -1
 
       - name: Build config.toml from secrets
