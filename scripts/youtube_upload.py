@@ -214,6 +214,7 @@ def upload(args: argparse.Namespace) -> int:
         body["status"]["publishAt"] = args.schedule
         privacy = f"private until {args.schedule}"
 
+    actual = "not-checked"
     media = MediaFileUpload(str(path), mimetype="video/mp4",
                             chunksize=8 * 1024 * 1024, resumable=True)
     request = service.videos().insert(part="snippet,status", body=body, media_body=media)
@@ -236,6 +237,33 @@ def upload(args: argparse.Namespace) -> int:
 
     vid = response["id"]
     print(f"::notice::uploaded https://youtu.be/{vid} ({privacy})")
+
+    # ---- verify the privacy YouTube actually applied --------------------
+    # Google's docs contradict each other on this. The videos.insert reference
+    # (updated Oct 2026) says unverified projects are NOT restricted to private;
+    # the July 2020 revision history says they are, until an audit. Both pages
+    # are live. Rather than trust either, read the stored value back and report
+    # what actually happened.
+    if not args.schedule and args.privacy in {"public", "unlisted"}:
+        try:
+            check = service.videos().list(part="status", id=vid).execute()
+            items = check.get("items") or []
+            actual = items[0].get("status", {}).get("privacyStatus", "unknown") if items else "unknown"
+            upload_state = items[0].get("status", {}).get("uploadStatus", "") if items else ""
+            if actual == args.privacy and upload_state in ("", "uploaded", "processed"):
+                print(f"::notice::privacy confirmed: {actual}")
+            elif actual == "private":
+                print("::error::requested " + args.privacy + " but YouTube stored the video as "
+                      "PRIVATE. This is the unaudited-project restriction. The video is live at "
+                      "https://youtu.be/" + vid + " but only you can see it.")
+                print("::error::Fix: submit the YouTube API compliance audit, then re-run. "
+                      "Until it passes, publish with pubkey=upload_post or flip each video "
+                      "to public in YouTube Studio.")
+            else:
+                print(f"::warning::privacy is '{actual}', expected '{args.privacy}' "
+                      f"(uploadStatus={upload_state or 'n/a'})")
+        except HttpError as exc:
+            print(f"::warning::could not verify privacy: {exc}")
 
     if args.thumbnail:
         tp = Path(args.thumbnail)
@@ -269,9 +297,16 @@ def upload(args: argparse.Namespace) -> int:
 
     summary = Path(args.report)
     summary.parent.mkdir(parents=True, exist_ok=True)
-    summary.write_text(json.dumps({"video_id": vid, "title": title,
-                                   "url": f"https://youtu.be/{vid}",
-                                   "privacy": privacy}, indent=2), encoding="utf-8")
+    summary.write_text(json.dumps({
+        "provider": "youtube-data-api",
+        "video_id": vid,
+        "title": title,
+        "url": f"https://youtu.be/{vid}",
+        "privacy_requested": args.privacy,
+        "privacy_actual": actual,
+        "note": ("private despite a public request = unaudited project; "
+                 "submit the compliance audit" if actual == "private" else ""),
+    }, indent=2), encoding="utf-8")
     print(f"wrote {summary}")
     return 0
 

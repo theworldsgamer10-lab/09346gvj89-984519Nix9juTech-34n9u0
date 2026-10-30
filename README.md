@@ -21,6 +21,7 @@ cron 08:00 / 17:00 Dhaka
         │
         ▼
   youtube_upload.py ──► YouTube Data API v3   (only when publish is on)
+                        own Cloud project, no third party, no monthly cap
         │
         ▼
   state/used.json committed back ──► next run picks a different subject
@@ -63,7 +64,10 @@ topics/curriculum.json              22 domains, 176 topics, ordered by difficult
 state/used.json                     history; committed back by the workflow
 config/mpt-config.template.toml     vendored copy of upstream's 845-line template
 tests/                              topic picker tests
-docs/SETUP.md                       the one-time credentials walkthrough
+docs/SETUP.md                       quick secrets setup
+docs/OWN-API-SETUP.md               full Google Cloud walkthrough, every form field
+docs/YOUTUBE-CREDENTIALS.md         the App-domain form answers
+docs/site/                          home page + privacy + ToS for GitHub Pages
 docs/TROUBLESHOOTING.md             what breaks and what to do
 ```
 
@@ -75,7 +79,7 @@ docs/TROUBLESHOOTING.md             what breaks and what to do
 | Groq (LLM) | free | generous daily request cap |
 | Pexels / Pixabay | free | 200 req/hr / 100 req/min |
 | Edge TTS | free | no key, no quota |
-| YouTube Data API | free | ~6 uploads/day in default quota |
+| YouTube Data API | free | 100 uploads/day (own bucket since Jun 2026) |
 | **Total** | **$0** | 2 videos/day is well inside every limit |
 
 ## Honest limits

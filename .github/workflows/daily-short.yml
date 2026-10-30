@@ -52,10 +52,12 @@ env:
   VOICE_NAME: ${{ vars.VOICE_NAME || 'en-US-AndrewNeural' }}
   AUTOPUBLISH: ${{ vars.AUTO_PUBLISH || 'false' }}
   # Which publisher to use when publishing is enabled.
-  #   upload_post  (default) - public uploads work immediately, 10/month free
-  #   youtube_api            - free forever, but uploads stay PRIVATE until
-  #                            YouTube audits the Google Cloud project
-  PUBLISH_VIA: ${{ vars.PUBLISH_VIA || 'upload_post' }}
+  #   youtube_api  (default) - your own project, no third party, no monthly cap.
+  #                            Uploads may be locked to private until the
+  #                            compliance audit passes - the upload step reads
+  #                            the stored privacy back and says so explicitly.
+  #   upload_post            - fallback only if the audit path blocks you
+  PUBLISH_VIA: ${{ vars.PUBLISH_VIA || 'youtube_api' }}
   UPLOAD_POST_API_KEY: ${{ secrets.UPLOAD_POST_API_KEY }}
   UPLOAD_POST_USERNAME: ${{ secrets.UPLOAD_POST_USERNAME }}
 
