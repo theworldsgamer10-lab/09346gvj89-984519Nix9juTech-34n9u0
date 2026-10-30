@@ -1,0 +1,20 @@
+# secrets - never commit
+.env
+.secrets/
+*.pem
+*_token
+*token.txt
+
+# build/run artifacts
+out/
+.mpt/
+.mypy_cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
+.venv/
+
+# os
+.DS_Store
+Thumbs.db

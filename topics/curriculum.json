@@ -1,0 +1,313 @@
+{
+ "version": 1,
+ "domains": [
+  {
+   "domain": "Physics",
+   "persona": "You are a physics teacher. Name the law responsible for the effect, use one everyday object, and state the mechanism step by step.",
+   "topics": [
+    "Why ice floats on water",
+    "How noise-cancelling headphones work",
+    "Why a spinning top stays upright",
+    "What entropy really measures",
+    "Why light slows down in glass",
+    "How a microwave heats food",
+    "Why satellites do not fall out of the sky",
+    "What the second law of thermodynamics forbids"
+   ]
+  },
+  {
+   "domain": "Chemistry",
+   "persona": "You are a chemistry teacher. Use real named molecules and bonds. Never describe a reaction without saying why it happens.",
+   "topics": [
+    "Why salt melts ice on roads",
+    "What pH actually measures",
+    "Why water behaves unlike any other liquid",
+    "Why soap removes grease",
+    "What a catalyst does",
+    "Why iron rusts while gold does not",
+    "Why diamonds and graphite differ",
+    "What makes a reaction release heat"
+   ]
+  },
+  {
+   "domain": "Biology",
+   "persona": "You are a biology teacher. Tie every claim to a named structure and its function.",
+   "topics": [
+    "Why we yawn",
+    "How vaccines train your immune system",
+    "What mitochondria actually do",
+    "Why blood is red and not blue",
+    "How muscles turn food into motion",
+    "Why wounds heal in visible stages",
+    "How neurons send signals",
+    "Why cells die on purpose"
+   ]
+  },
+  {
+   "domain": "Astronomy",
+   "persona": "You are an astronomer. Use scale comparisons and always say how the measurement was made.",
+   "topics": [
+    "Why the moon has phases",
+    "What a light-year measures",
+    "How black holes form",
+    "Why stars twinkle but planets do not",
+    "How we know exoplanets exist",
+    "Why the sky is dark at night",
+    "How the sun will end",
+    "What dark matter is and is not"
+   ]
+  },
+  {
+   "domain": "Earth science",
+   "persona": "You are an earth scientist. Separate what is measured from what is modelled.",
+   "topics": [
+    "Why the ocean is salty",
+    "How tides are really caused",
+    "What the greenhouse effect actually is",
+    "Why earthquakes happen where they do",
+    "How rivers shape valleys",
+    "Why weather and climate are different",
+    "How ice cores record the past",
+    "Why the poles are warming faster"
+   ]
+  },
+  {
+   "domain": "Mathematics",
+   "persona": "You are a maths teacher. Build one clean intuition and skip no step in the reasoning.",
+   "topics": [
+    "Why zero was once a dangerous idea",
+    "Why 0.999 repeating equals exactly one",
+    "Why infinity comes in different sizes",
+    "What a proof actually is",
+    "Why prime numbers matter",
+    "How probability fools intuition",
+    "What calculus was invented to solve",
+    "Why randomness clusters"
+   ]
+  },
+  {
+   "domain": "Computer science",
+   "persona": "You are a computer science teacher. Explain what the machine actually executes, not the marketing name for it.",
+   "topics": [
+    "What an algorithm actually is",
+    "Why computers cannot make truly random numbers",
+    "Why AI models confidently make things up",
+    "How a search engine ranks a page",
+    "What encryption actually protects",
+    "Why software updates break things",
+    "How a database keeps data consistent",
+    "What happens when you load a webpage"
+   ]
+  },
+  {
+   "domain": "Engineering",
+   "persona": "You are an engineer. Give the parts, the job each part does, and one realistic failure mode.",
+   "topics": [
+    "How GPS figures out where you are",
+    "Why an airplane can glide with engines off",
+    "How a battery stores energy",
+    "How a bridge carries traffic",
+    "Why buildings need to sway",
+    "How a jet engine produces thrust",
+    "How touchscreens sense your finger",
+    "Why machines need lubrication"
+   ]
+  },
+  {
+   "domain": "Medicine",
+   "persona": "You are a doctor explaining to a patient. Define every term plainly and give no personal medical advice.",
+   "topics": [
+    "Why a fever happens",
+    "What the two blood pressure numbers mean",
+    "What inflammation is for",
+    "How antibiotics work and why resistance grows",
+    "Why anaesthesia makes you unconscious",
+    "How the kidney filters blood",
+    "What a virus needs from your cells",
+    "Why allergies exist"
+   ]
+  },
+  {
+   "domain": "Neuroscience and mind",
+   "persona": "You are a neuroscience teacher. Separate replicated findings from pop science.",
+   "topics": [
+    "Why we forget things",
+    "How sleep rewires memories",
+    "Why procrastination is a reward problem",
+    "What confirmation bias does to evidence",
+    "How your brain decides what to notice",
+    "Why time feels faster as you age",
+    "What dopamine actually does",
+    "How habits form in the brain"
+   ]
+  },
+  {
+   "domain": "Archaeology",
+   "persona": "You are an archaeologist. Separate evidence from interpretation, and say what would change the conclusion.",
+   "topics": [
+    "How archaeologists date a bone",
+    "Why the Bronze Age collapsed",
+    "What Neanderthal DNA tells us",
+    "How a dig site is chosen",
+    "What a broken pot reveals",
+    "How ancient buildings are found from the air",
+    "Why some sites are lost to mud",
+    "What DNA says about migration"
+   ]
+  },
+  {
+   "domain": "History",
+   "persona": "You are a historian. Give cause, mechanism, consequence, and name what remains uncertain.",
+   "topics": [
+    "Why the printing press changed what counts as truth",
+    "How the telegraph shrank the world",
+    "Why empires collapse",
+    "What the spice trade actually moved",
+    "How diseases decided wars",
+    "Why the industrial revolution started in Britain",
+    "How currency was invented twice",
+    "Why revolutions rarely end where they start"
+   ]
+  },
+  {
+   "domain": "Economics",
+   "persona": "You are an economics teacher. Use concrete numbers and a household example.",
+   "topics": [
+    "Why inflation happens",
+    "What compound interest does over thirty years",
+    "What opportunity cost means",
+    "Why central banks raise interest rates",
+    "What a supply shock does to prices",
+    "How insurance pools risk",
+    "Why comparative advantage creates trade",
+    "What a bubble looks like from inside"
+   ]
+  },
+  {
+   "domain": "Everyday life skills",
+   "persona": "You are a practical instructor. Be concrete and step by step, and stay safety aware.",
+   "topics": [
+    "How to read a nutrition label properly",
+    "How to spot a scam phone call",
+    "How to compare two loan offers fairly",
+    "What a contract clause actually commits you to",
+    "How to check whether a health claim is real",
+    "How to budget with an irregular income",
+    "What your legal rights are when buying online",
+    "How to read a statistical headline"
+   ]
+  },
+  {
+   "domain": "Language",
+   "persona": "You are a linguist. Use real examples from named languages.",
+   "topics": [
+    "Why languages lose words",
+    "Why some words cannot be translated",
+    "Why English spelling is a museum of history",
+    "How languages borrow from each other",
+    "Why grammar changes over centuries",
+    "What a dialect is not",
+    "How writing systems were invented",
+    "Why some languages have no word order"
+   ]
+  },
+  {
+   "domain": "Ecology",
+   "persona": "You are an ecologist. Show the food web or feedback loop explicitly.",
+   "topics": [
+    "Why bees matter more than they look",
+    "How forests make their own rain",
+    "Why coral bleaches",
+    "What an invasive species does to a food web",
+    "How wolves changed a river and why that story is exaggerated",
+    "Why wetlands absorb floods",
+    "How soil is a living system",
+    "What the nitrogen cycle keeps balancing"
+   ]
+  },
+  {
+   "domain": "Philosophy",
+   "persona": "You are a philosophy teacher. Present the strongest version of each side before concluding anything.",
+   "topics": [
+    "What the trolley problem is really testing",
+    "What Occam's razor actually says",
+    "Is mathematics invented or discovered",
+    "What a thought experiment can prove",
+    "Why the problem of induction matters",
+    "What makes a promise binding",
+    "How to argue without lying",
+    "What we owe strangers"
+   ]
+  },
+  {
+   "domain": "Art and music",
+   "persona": "You are a music theorist. Explain the physical reason behind the effect.",
+   "topics": [
+    "Why a major chord sounds happy",
+    "How linear perspective tricks your eye",
+    "Why some faces look beautiful",
+    "How reverb tells your ear about space",
+    "Why colour wheels fail",
+    "How rhythm syncs a crowd",
+    "What makes a melody memorable",
+    "Why film scores bend your mood"
+   ]
+  },
+  {
+   "domain": "Food science",
+   "persona": "You are a food scientist. Give the reaction, the temperature, and the consequence.",
+   "topics": [
+    "Why steak browns but boiled meat does not",
+    "Why bread rises",
+    "Why salt changes how things taste",
+    "Why chilli burns",
+    "How fermentation preserves food",
+    "Why onions make you cry",
+    "What emulsifiers hold together",
+    "Why sugar behaves differently at each temperature"
+   ]
+  },
+  {
+   "domain": "Technology and society",
+   "persona": "You are a technology critic. Explain the mechanism first, then the incentive behind it.",
+   "topics": [
+    "How recommendation algorithms keep you watching",
+    "Who owns the data you generate",
+    "How a QR code can be faked",
+    "Why biometrics are hard to revoke",
+    "What an end-to-end encryption claim covers",
+    "How a platform decides what is harmful",
+    "Why batteries make geopolitics",
+    "What a model does not know"
+   ]
+  },
+  {
+   "domain": "Law and civics",
+   "persona": "You are a law teacher. Describe how the process works and where jurisdiction changes the answer.",
+   "topics": [
+    "What due process actually means",
+    "How a law is made",
+    "What probable cause is",
+    "How a contract is enforced",
+    "Why courts disagree",
+    "What a constitution can and cannot do",
+    "How international law binds a country",
+    "What habeas corpus protects"
+   ]
+  },
+  {
+   "domain": "Human performance",
+   "persona": "You are a sports scientist. Distinguish mechanism from anecdote and avoid giving personal training advice.",
+   "topics": [
+    "Why warm ups matter",
+    "How hydration affects performance",
+    "Why sprinters lean forward",
+    "What lactic acid really does",
+    "How altitude training changes blood",
+    "Why recovery is training",
+    "How body composition is measured",
+    "What limits endurance"
+   ]
+  }
+ ]
+}
